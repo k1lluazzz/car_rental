@@ -3,7 +3,10 @@ const User = require("../models/User");
 
 exports.protect = async (req, res, next) => {
   let token;
-  if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
     try {
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -22,7 +25,10 @@ exports.protect = async (req, res, next) => {
 
 exports.authorize = (...roles) => {
   return (req, res, next) => {
-    if (!req.user || (!roles.includes(req.user.role) && req.user.role !== "admin")) {
+    if (
+      !req.user ||
+      (!roles.includes(req.user.role) && req.user.role !== "admin")
+    ) {
       return res.status(403).json({ message: "Không có quyền truy cập!" });
     }
     next();
