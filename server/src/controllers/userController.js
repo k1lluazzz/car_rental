@@ -1,8 +1,12 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 exports.getUsers = async (req, res) => {
-  const users = await User.find();
-  res.json(users);
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 exports.createUser = async (req, res) => {
