@@ -6,20 +6,12 @@ const {
   updateRental,
   deleteRental,
 } = require("../controllers/rentalController");
-
 const { protect, authorize } = require("../middleware/authMiddleWare");
-
 const router = express.Router();
 
-// Ai cũng có thể xem nếu đã đăng nhập
-router.get("/", protect, getRentals);
-router.get("/:id", protect, getRentalById);
-
-// Chỉ người thuê xe mới được tạo đơn
-router.post("/", protect, authorize("renter"), createRental);
-
-// Cập nhật/xoá đơn thuê — tuỳ logic bạn có thể giới hạn cho người tạo đơn
-router.put("/:id", protect, authorize("renter"), updateRental);
-router.delete("/:id", protect, authorize("renter"), deleteRental);
-
+router.get("/", protect, authorize("admin"), getRentals);
+router.get("/:id", protect, authorize("admin"), getRentalById);
+router.post("/", protect, authorize("renter", "admin"), createRental);
+router.put("/:id", protect, authorize("admin"), updateRental);
+router.delete("/:id", protect, authorize("admin"), deleteRental);
 module.exports = router;
