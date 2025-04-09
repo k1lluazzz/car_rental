@@ -10,6 +10,45 @@ exports.createUser = async (req, res) => {
   await newUser.save();
   res.json(newUser);
 };
+
+// Lấy thông tin 1 user theo ID
+exports.getUserById = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user)
+      return res.status(404).json({ message: "Không tìm thấy người dùng!" });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Cập nhật user
+exports.updateUser = async (req, res) => {
+  try {
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!updatedUser)
+      return res.status(404).json({ message: "Không tìm thấy người dùng!" });
+    res.json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Xóa user
+exports.deleteUser = async (req, res) => {
+  try {
+    const deletedUser = await User.findByIdAndDelete(req.params.id);
+    if (!deletedUser)
+      return res.status(404).json({ message: "Không tìm thấy người dùng!" });
+    res.json({ message: "Xóa thành công!" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // Tạo token
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "7d" });
