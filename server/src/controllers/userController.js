@@ -20,7 +20,8 @@ exports.createUser = async (req, res) => {
 
 // Lấy thông tin 1 user theo ID
 exports.getUserById = async (req, res) => {
-  if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+  const { id } = req.params;
+  if (!id.match(/^[0-9a-fA-F]{24}$/)) {
     return res.status(400).json({ message: "ID không hợp lệ" });
   }
   try {
@@ -35,6 +36,11 @@ exports.getUserById = async (req, res) => {
 
 // Cập nhật user
 exports.updateUser = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+    return res.status(400).json({ message: "ID không hợp lệ" });
+  }
   try {
     const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -49,6 +55,11 @@ exports.updateUser = async (req, res) => {
 
 // Xóa user
 exports.deleteUser = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+    return res.status(400).json({ message: "ID không hợp lệ" });
+  }
   try {
     const deletedUser = await User.findByIdAndDelete(req.params.id);
     if (!deletedUser)

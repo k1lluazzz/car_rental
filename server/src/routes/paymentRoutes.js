@@ -7,12 +7,14 @@ const {
   deletePayment,
 } = require("../controllers/paymentController");
 
+const { protect, authorize } = require("../middleware/authMiddleWare");
+
 const router = express.Router();
 
-router.get("/", getPayments);
-router.get("/:id", getPaymentById);
-router.post("/", createPayment);
-router.put("/:id", updatePayment);
-router.delete("/:id", deletePayment);
+router.get("/", protect, getPayments);
+router.get("/:id", protect, getPaymentById);
+router.post("/", protect, authorize("renter"), createPayment);
+router.put("/:id", protect, authorize("renter"), updatePayment);
+router.delete("/:id", protect, authorize("renter"), deletePayment);
 
 module.exports = router;
