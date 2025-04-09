@@ -1,5 +1,7 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+
+// Lấy danh sách tất cả người dùng
 exports.getUsers = async (req, res) => {
   try {
     const users = await User.find();
@@ -9,6 +11,7 @@ exports.getUsers = async (req, res) => {
   }
 };
 
+// Tạo người dùng mới
 exports.createUser = async (req, res) => {
   const newUser = new User(req.body);
   await newUser.save();
@@ -17,6 +20,9 @@ exports.createUser = async (req, res) => {
 
 // Lấy thông tin 1 user theo ID
 exports.getUserById = async (req, res) => {
+  if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+    return res.status(400).json({ message: "ID không hợp lệ" });
+  }
   try {
     const user = await User.findById(req.params.id);
     if (!user)

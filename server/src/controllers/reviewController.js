@@ -1,5 +1,6 @@
 const Review = require("../models/Review");
 
+// Lấy tất cả đánh giá
 exports.getReviews = async (req, res) => {
   try {
     const reviews = await Review.find();
@@ -9,6 +10,7 @@ exports.getReviews = async (req, res) => {
   }
 };
 
+// Lấy thông tin đánh giá theo ID
 exports.getReviewById = async (req, res) => {
   try {
     const review = await Review.findById(req.params.id);
@@ -20,6 +22,7 @@ exports.getReviewById = async (req, res) => {
   }
 };
 
+// Tạo đánh giá mới
 exports.createReview = async (req, res) => {
   try {
     const newReview = new Review(req.body);
@@ -30,6 +33,7 @@ exports.createReview = async (req, res) => {
   }
 };
 
+// Cập nhật đánh giá
 exports.updateReview = async (req, res) => {
   try {
     const updated = await Review.findByIdAndUpdate(req.params.id, req.body, {
@@ -43,6 +47,7 @@ exports.updateReview = async (req, res) => {
   }
 };
 
+// Xóa đánh giá
 exports.deleteReview = async (req, res) => {
   try {
     const deleted = await Review.findByIdAndDelete(req.params.id);

@@ -1,5 +1,6 @@
 const Rental = require("../models/Rental");
 
+// Lấy tất cả đơn thuê xe
 exports.getRentals = async (req, res) => {
   try {
     const rentals = await Rental.find();
@@ -9,6 +10,7 @@ exports.getRentals = async (req, res) => {
   }
 };
 
+// Lấy thông tin đơn thuê xe theo ID
 exports.getRentalById = async (req, res) => {
   try {
     const rental = await Rental.findById(req.params.id);
@@ -20,6 +22,7 @@ exports.getRentalById = async (req, res) => {
   }
 };
 
+//  Tạo đơn thuê xe mới
 exports.createRental = async (req, res) => {
   try {
     const newRental = new Rental(req.body);
@@ -30,6 +33,7 @@ exports.createRental = async (req, res) => {
   }
 };
 
+// Cập nhật đơn thuê xe
 exports.updateRental = async (req, res) => {
   try {
     const updated = await Rental.findByIdAndUpdate(req.params.id, req.body, {
@@ -43,6 +47,7 @@ exports.updateRental = async (req, res) => {
   }
 };
 
+// Xóa đơn thuê xe
 exports.deleteRental = async (req, res) => {
   try {
     const deleted = await Rental.findByIdAndDelete(req.params.id);

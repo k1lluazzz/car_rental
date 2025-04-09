@@ -1,5 +1,6 @@
 const Payment = require("../models/Payment");
 
+// Lấy tất cả thanh toán
 exports.getPayments = async (req, res) => {
   try {
     const payments = await Payment.find();
@@ -9,6 +10,7 @@ exports.getPayments = async (req, res) => {
   }
 };
 
+// Lấy thông tin thanh toán theo ID
 exports.getPaymentById = async (req, res) => {
   try {
     const payment = await Payment.findById(req.params.id);
@@ -20,6 +22,7 @@ exports.getPaymentById = async (req, res) => {
   }
 };
 
+// Tạo thanh toán mới
 exports.createPayment = async (req, res) => {
   try {
     const newPayment = new Payment(req.body);
@@ -30,6 +33,7 @@ exports.createPayment = async (req, res) => {
   }
 };
 
+// Cập nhật thanh toán
 exports.updatePayment = async (req, res) => {
   try {
     const updated = await Payment.findByIdAndUpdate(req.params.id, req.body, {
@@ -43,6 +47,7 @@ exports.updatePayment = async (req, res) => {
   }
 };
 
+// Xóa thanh toán
 exports.deletePayment = async (req, res) => {
   try {
     const deleted = await Payment.findByIdAndDelete(req.params.id);

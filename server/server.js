@@ -12,14 +12,14 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 connectDB();
-
+app.get("/", (req, res) => {
+    res.send("🚗 Vehicle Rental API is running...");
+  });
+  
 app.use("/api/users", userRoutes);
 app.use("/api/cars", carRoutes);
 app.use("/api/rentals", rentalRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/reviews", reviewRoutes);
-
-app.use("/api/users", require("./src/routes/userRoutes"));
-
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
