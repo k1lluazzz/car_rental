@@ -1,9 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const { getDashboardStats } = require("../controllers/adminController");
 const { protect, authorize } = require("../middleware/authMiddleWare");
+const {
+  getDashboardStats,
+  getAllUsers,
+  updateUserRole,
+} = require("../controllers/adminController");
 
-// Chỉ admin mới được truy cập dashboard
-router.get("/dashboard", protect, authorize("admin"), getDashboardStats);
+router.use(protect, authorize("admin"));
+
+router.get("/stats", getDashboardStats);
+router.get("/users", getAllUsers);
+router.put("/user/:id", updateUserRole);
 
 module.exports = router;
