@@ -28,7 +28,11 @@ exports.getCarById = async (req, res) => {
 // Tạo xe mới
 exports.createCar = async (req, res) => {
   try {
-    const newCar = new Car(req.body);
+    const newCarData = { ...req.body };
+    if (req.file) {
+      newCarData.image = req.file.path;
+    }
+    const newCar = new Car(newCarData);
     await newCar.save();
     res.status(201).json(newCar);
   } catch (error) {

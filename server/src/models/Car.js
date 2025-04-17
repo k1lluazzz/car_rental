@@ -8,6 +8,7 @@ const carSchema = new mongoose.Schema({
   pricePerDay: { type: Number, required: true }, // Giá thuê/ngày
   location: { type: String, required: true }, // Địa điểm xe
   status: { type: String, enum: ["available", "rented"], default: "available" }, // Trạng thái xe
+  image: { type: String }, // Đường dẫn ảnh xe
   createdAt: { type: Date, default: Date.now },
 });
 
